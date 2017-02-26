@@ -1,6 +1,7 @@
 use std::fmt;
 
 #[allow(dead_code)]
+#[derive(PartialEq)]
 pub struct Sexpr<T, S> {
     first: T,
     last: S,

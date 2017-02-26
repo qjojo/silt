@@ -15,12 +15,13 @@ fn main() {
     //debug statements
     print!("> ");
     io::stdout().flush().ok();
-    println!("testing: atom function");
-    let testatom = sexpr::Sexpr::<i32, i32>::new(12, 0, false);
-    if testatom.is_atom() {
-        println!("{} is an atom!", testatom);
+    println!("testing: eq function");
+    let testatom = sexpr::Sexpr::<i32, i32>::new(12, 0, true);
+    let testatom2 = sexpr::Sexpr::<i32, i32>::new(12, 0, true);
+    if testatom == testatom2 {
+        println!("{} is equal to {}", testatom, testatom2);
     } else {
-        println!("{} is an s-expression", testatom);
+        println!("{} is not equal to {}", testatom, testatom2);
     }
 
     while !exit  {
