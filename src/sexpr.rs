@@ -1,31 +1,29 @@
-enum Atom {
-    Nil,
-    Int(i32),
-    Fun(fn(Sexpr) -> Sexpr),
+use std::fmt;
+
+#[allow(dead_code)]
+pub struct Sexpr<T, S> {
+    first: T,
+    last: S,
+    atomic: bool,
 }
 
-struct Sexpr {
-    list: Vec<Atom>,
-}
-
-impl Sexpr {
-    fn new(a: Atom) -> Sexpr {
-        Sexpr {list: vec![]}
+#[allow(dead_code)]
+impl<T, S> Sexpr<T, S> {
+    pub fn new(a: T, b: S, at: bool) -> Sexpr<T, S> {
+        Sexpr {first: a, last: b, atomic: at}
     }
 
-    fn add(&self, a: Atom) {
-        self.list.push(a);
+    pub fn is_atom(&self) -> bool {
+        self.atomic
     }
 }
 
-macro_rules! sexpr {
-    ( $( $x:expr),* ) => {
-        {
-            let mut temp_sexpr = Sexpr::new();
-            $(
-                temp_sexpr.list.push($x);
-            )*
-            temp_sexpr
+impl<T, S> fmt::Display for Sexpr<T, S> where T: fmt::Display, S: fmt::Display{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        if self.atomic {
+            write!(f, "{}", self.first)
+        } else {
+            write!(f, "({}, {})", self.first, self.last)
         }
-    };
+    }
 }

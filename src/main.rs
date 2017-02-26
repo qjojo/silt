@@ -1,7 +1,9 @@
 use std::io;
 use std::io::Write;
 
-const VERSION: &'static str = "0.1.0";
+mod sexpr;
+
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 fn main() {
     println!("silt REPL {}", VERSION);
@@ -9,6 +11,17 @@ fn main() {
     //Entering main REPL
     let mut buffer = String::new();
     let mut exit = false;
+
+    //debug statements
+    print!("> ");
+    io::stdout().flush().ok();
+    println!("testing: atom function");
+    let testatom = sexpr::Sexpr::<i32, i32>::new(12, 0, false);
+    if testatom.is_atom() {
+        println!("{} is an atom!", testatom);
+    } else {
+        println!("{} is an s-expression", testatom);
+    }
 
     while !exit  {
         print!("> ");
