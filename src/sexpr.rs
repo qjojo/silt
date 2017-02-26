@@ -1,5 +1,21 @@
 use std::fmt;
 
+/// lisp according to McCarthy's predicates
+/// F-function implementation status
+///
+/// atom    - true if argument is an atom           [x]
+/// eq      - true if atoms are equal               [x]
+/// car     - returns first half of cons cell       [ ]
+/// cdr     - returns second half of cons cell      [ ]
+/// cons    - makes a new cons cell                 [ ]
+///
+/// S-function implementation status
+///
+/// quote   - represent an expression               [ ]
+/// cond    - conditional branch                    [ ]
+/// lambda  - define function                       [ ]
+/// label   - works like goto                       [ ]
+
 #[allow(dead_code)]
 #[derive(PartialEq)]
 pub struct Sexpr<T, S> {
