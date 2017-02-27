@@ -30,8 +30,16 @@ impl<T, S> Sexpr<T, S> {
         Sexpr {first: a, last: b, atomic: at}
     }
 
-    pub fn is_atom(&self) -> bool {
+    pub fn atom(&self) -> bool {
         self.atomic
+    }
+
+    pub fn car(&self) -> &T {
+        &(self.first)
+    }
+
+    pub fn cdr(&self) -> &S {
+        &(self.last)
     }
 }
 
