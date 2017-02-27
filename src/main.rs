@@ -15,9 +15,11 @@ fn main() {
     //debug statements
     print!("> ");
     io::stdout().flush().ok();
-    println!("testing: car/cdr");
-    let testatom = sexpr::Sexpr::<i32, i32>::new(12, 0, true);
-    println!("{} -> car: {}\n{} -> cdr: {}", testatom, testatom.car(), testatom, testatom.cdr());
+    println!("testing: cons");
+    let testatom = sexpr::Sexpr::<i32, i32>::new(12, 3, true);
+    let testatom2 = sexpr::Sexpr::<i32, i32>::new(11, 4, true);
+    println!("(cons {} {}) = {}", testatom, testatom2, sexpr::cons(&testatom, &testatom2));
+
 
     while !exit  {
         print!("> ");
