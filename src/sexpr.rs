@@ -1,4 +1,6 @@
 use std::fmt;
+use std::str::FromStr;
+
 
 /// lisp according to McCarthy's predicates
 /// F-function implementation status
@@ -11,10 +13,12 @@ use std::fmt;
 ///
 /// S-function implementation status
 ///
+/// read    - read an expression from string
 /// quote   - represent an expression               [ ]
 /// cond    - conditional branch                    [ ]
 /// lambda  - define function                       [ ]
 /// label   - works like goto                       [ ]
+/// eval    - evaluates a form                      [ ]
 
 #[allow(dead_code)]
 #[derive(PartialEq, Clone)]
@@ -48,7 +52,7 @@ impl<T, S> fmt::Display for Sexpr<T, S> where T: fmt::Display, S: fmt::Display{
         if self.atomic {
             write!(f, "{}", self.first)
         } else {
-            write!(f, "({}, {})", self.first, self.last)
+            write!(f, "({} {})", self.first, self.last)
         }
     }
 }
@@ -62,3 +66,38 @@ pub fn cons<T, S, U, V>(a: &Sexpr<T, S>, b: &Sexpr<U, V>) -> Sexpr<T, U> where
     }
     Sexpr::new(a.car().clone(), b.car().clone(), false)
 }
+
+#[allow(dead_code, unused_imports, unused_assignments)]
+pub fn read(instr: String) -> Sexpr<String, String> {
+    let mut t_car = String::new();
+    let mut t_cdr = String::new();
+    scan!(instr.bytes() => "({} {})", t_car, t_cdr);
+    Sexpr::new(t_car, t_cdr, false)
+}
+
+fn is_numeric<T: FromStr>(s: &str) -> bool {
+    s.parse::<T>().is_ok()
+}
+
+/*
+pub fn to_symbol(str_sexpr: Sexpr<String, String>) {
+    let s_car = str_sexpr.car();
+    let s_cdr = str_sexpr.cdr();
+    let r_car;
+    let r_cdr;
+    if is_numeric(s_car) {
+        let r_car = s_car.parse().unwrap();
+    } else {
+        let r_car = s_car.Clone();
+    }
+
+    if str_sexpr.atom() {
+        return Sexpr::new(r_car, 0, true)
+    }
+    if is_numeric(s_cdr) {
+        let r_cdr = s_cdr.parse().unwrap();
+    } else {
+        let r_cdr = s_cdr.Clone();
+    }
+}
+*/
