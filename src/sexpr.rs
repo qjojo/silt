@@ -28,6 +28,12 @@ pub struct Sexpr<T, S> {
     atomic: bool,
 }
 
+pub enum Atom<T> {
+    Nil,
+    Int(i32),
+    Function(fn(T) -> T)
+}
+
 #[allow(dead_code)]
 impl<T, S> Sexpr<T, S> {
     pub fn new(a: T, b: S, at: bool) -> Sexpr<T, S> {
